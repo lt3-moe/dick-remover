@@ -60,8 +60,8 @@ async def remover(bot: aiogram.Bot) -> None:
         item = await queue.take()
         print("taken", get_chat_link(item), "from queue")
         await bot.delete_message(CHAT_ID, item)
-
         print("deleted", get_chat_link(item))
+        await asyncio.sleep(3)
 
 
 async def run_bot(bot: aiogram.Bot) -> None:
