@@ -2,6 +2,8 @@ import aiorun
 import environs
 import aiogram
 import asyncio
+import typing
+
 
 from aiogram import F
 
@@ -18,8 +20,10 @@ CHAT_ID = -(int(1e12) + RAW_CHAT_ID)
 print("listening to chat", RAW_CHAT_ID)
 print(f"limiting to {MAX_DICKS} max dicks")
 
+T = typing.TypeVar("T")
 
-class LowerBoundQueue[T]:
+
+class LowerBoundQueue(typing.Generic[T]):
     def __init__(self, bound: int) -> None:
         self._add = asyncio.Queue[T](maxsize=bound)
         self._remove = asyncio.Queue[T]()
