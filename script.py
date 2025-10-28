@@ -10,10 +10,13 @@ env.read_env()
 
 BOT_TOKEN = env.str("BOT_TOKEN")
 RAW_CHAT_ID = env.int("CHAT_ID")
+MAX_DICKS = env.int("MAX_DICKS", 10)
+
 CHAT_ID = -(int(1e12) + RAW_CHAT_ID)
 
 
-print("listening to chat", CHAT_ID)
+print("listening to chat", RAW_CHAT_ID)
+print(f"limiting to {MAX_DICKS} max dicks")
 
 
 class LowerBoundQueue[T]:
@@ -31,7 +34,7 @@ class LowerBoundQueue[T]:
         return await self._remove.get()
 
 
-queue = LowerBoundQueue[int](bound=1)
+queue = LowerBoundQueue[int](bound=MAX_DICKS)
 
 dp = aiogram.Dispatcher()
 
