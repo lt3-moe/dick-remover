@@ -6,6 +6,7 @@ import typing
 
 
 from aiogram import F
+from aiogram.exceptions import TelegramBadRequest
 
 env = environs.Env()
 env.read_env()
@@ -59,8 +60,13 @@ async def remover(bot: aiogram.Bot) -> None:
     while True:
         item = await queue.take()
         print("taken", get_chat_link(item), "from queue")
-        await bot.delete_message(CHAT_ID, item)
-        print("deleted", get_chat_link(item))
+        try:
+            await bot.delete_message(CHAT_ID, item)
+            print("deleted", get_chat_link(item))
+        except TelegramBadRequest as e:
+            print(
+                f"bad request from telegram when deleting: {e.message}. Will silently ignore."
+            )
         await asyncio.sleep(3)
 
 
